@@ -50,5 +50,5 @@ if __name__ == "__main__":
 
     demo = WishboneToolDemo(uart_pins, gpio_pins)
 
-    p.build(demo, build_dir="./build", do_program=False)
+    p.build(demo, build_dir="./build", do_program=True)
 
