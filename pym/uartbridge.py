@@ -11,7 +11,7 @@ __ALL__ = ["UARTBridge"]
 class UARTBridge(Elaboratable):
     def __init__(self, divisor, pins):
         self.bus = wishbone.Interface(addr_width=30,
-                                      data_width=32, granularity=8)
+                                      data_width=32, granularity=32)
         self._pins = pins
         self._divisor = divisor
 
@@ -66,13 +66,19 @@ class UARTBridge(Elaboratable):
                     ]
 
                     with m.If(bytes_count == 0):
-                        with m.Switch(cmd):
-                            with m.Case(0x01):
-                                m.next = "Handle-Write"
-                            with m.Case(0x02):
-                                m.next = "Handle-Read"
-                            with m.Case():
-                                m.next = "Receive-Cmd"
+                        with m.If((cmd == 0x1) | (cmd == 0x3)):
+                            m.next = "Handle-Write"
+                        with m.Elif((cmd == 0x2) | (cmd == 0x4)):
+                            m.next = "Handle-Read"
+                        with m.Else():
+                            m.next = "Receive-Cmd"
+                        #with m.Switch(cmd):
+                        #    with m.Case(0x01):
+                        #        m.next = "Handle-Write"
+                        #    with m.Case(0x02):
+                        #        m.next = "Handle-Read"
+                        #    with m.Case():
+                        #        m.next = "Receive-Cmd"
 
             with m.State("Handle-Write"):
                 m.d.comb += serial.rx.ack.eq(1)

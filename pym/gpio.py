@@ -27,7 +27,7 @@ class GpioCtrl(Elaboratable):
         self.pins = pins
 
         self.port_reg = Signal(32)
-        self.ddr_reg = Signal(32)
+        self.ddr_reg = Signal(32, reset=0xffff)
 
     def elaborate(self, platform):
         m = Module()

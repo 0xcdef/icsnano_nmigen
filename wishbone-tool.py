@@ -47,7 +47,7 @@ if __name__ == "__main__":
     p.add_resources(p.gpio)
     p.add_resources(pmod2_uart)
 
-    uart_pins = p.request("uart", 1)
+    uart_pins = p.request("uart", 0)
     gpio_pins = []
     for idx in itertools.count():
         try:
@@ -56,6 +56,8 @@ if __name__ == "__main__":
             break
 
     print("default_clk_frequency: {}".format(p.default_clk_frequency))
-    uart_divisor = int(p.default_clk_frequency / 115200)
+    uart_divisor = int(p.default_clk_frequency // 115200)
+
     demo = WishboneToolDemo(uart_divisor, uart_pins, gpio_pins)
-    p.build(demo, build_dir="./build", do_program=True)
+
+    p.build(demo, do_program=True)

@@ -40,4 +40,4 @@ class Blinky(Elaboratable):
 if __name__ == "__main__":
     p = iCESugarNanoPlatform()
     p.add_resources(p.pmod_led)
-    p.build(Blinky(), program=True)
+    p.build(Blinky(), do_program=True)
