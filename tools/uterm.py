@@ -3,11 +3,17 @@ import sys
 from serial import Serial
 
 def Usage():
-    help_string = '''Usage: uterm -p PORT address [ data ]
+    help_string = '''UartTerm project control ultility
+Usage: uterm -p PORT address [ data ]
         -p      : target serial port, "COMx", "/dev/ttySx" or "/dev/ttyACMx"
         address : target address, hex string, like "0x10000004"
         data    : optional, data for write to address, hex string
-                  do read from address if w_data is not given.'''
+                  do read from address if data not given.
+example:
+        ./uterm -p /dev/ttyS4 0x10000000
+            - read from address 0x10000000
+        ./uterm -p /dev/ttyS4 0x10000000 0x55
+            - write 0x55 to address 0x10000000'''
     print(help_string)
 
 def main():
@@ -52,15 +58,7 @@ def main():
             cmd_r = int(cmd_r, 16).to_bytes(6, 'big')
             p.write(cmd_r)
 
-            dd = b'' 
-            ds = b'' 
-            while ds == b'':
-                ds = p.readall()
-
-            dd += ds
-            while ds != b'':
-                ds = p.readall()
-                dd += ds
+            dd = p.readall()
 
             print(*["{:02x}".format(_) for _ in dd])
     except ValueError:
