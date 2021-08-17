@@ -9,9 +9,8 @@ from nmigen_soc import wishbone
 from pym.icesugar_nano import *
 from pym.uartbridge import *
 from pym.gpio import *
-from pym.spiflash import *
 
-class WishboneToolDemo(Elaboratable):
+class UartTerm(Elaboratable):
     def __init__(self, uart_divisor, uart_pins, gpio_pins):
 
         self._wb_dec = wishbone.Decoder(addr_width=30, data_width=32, granularity=32)
@@ -38,6 +37,7 @@ class WishboneToolDemo(Elaboratable):
 
 if __name__ == "__main__":
 
+    # dummy uart port 
     pmod2_uart = [
         UARTResource(1, rx="C5", tx="B6",
             attrs=Attrs(IO_STANDARD="SB_LVTTL", PULLUP=1)),
@@ -58,6 +58,6 @@ if __name__ == "__main__":
     print("default_clk_frequency: {}".format(p.default_clk_frequency))
     uart_divisor = int(p.default_clk_frequency // 115200)
 
-    demo = WishboneToolDemo(uart_divisor, uart_pins, gpio_pins)
+    demo = UartTerm(uart_divisor, uart_pins, gpio_pins)
 
     p.build(demo, do_program=True)
