@@ -16,6 +16,14 @@ if vi < 36:
 
 print(">> Python check pass!")
 
+nmigen = ""
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "--nmigen-github":
+        nmigen = "https://github.com/nmigen/"
+    elif sys.argv[1] == "--nmigen-gitee":
+        nmigen = "https://gitee.com/x55aa/"
+
 # step 2: nMigen module
 import subprocess
 import pkg_resources
@@ -28,34 +36,44 @@ if len(missing) > 0:
     print(">> Install missing modules:")
     python = sys.executable
     for mm in missing:
-        cmd = "git clone https://gitee.com/ic-starter/{} && cd {} && python3 setup.py install --user".format(mm, mm)
-        r = os.system(cmd)
-        if r != 0:
-            print(">> ...{} install failed!".format(mm))
+        print(">> ...Install ", mm)
+        if nmigen != "":
+            if os.system("whereis git 2&>1") != 0:
+                print(">> git is needed, please install it firstly!")
+                exit(0)
 
-        if os.path.isdir(mm):
-            os.system("rm -rf {}".format(mm))
-        #print(">> ...Install ", mm)
-        #subprocess.check_call([python, '-m', 'pip', 'install', mm], stdout=subprocess.DEVNULL)
+            cmd = "git clone {}{} && cd {} && python3 setup.py install --user 2>&1".format(nmigen,mm, mm)
+            r = os.system(cmd)
+
+            if os.path.isdir(mm):
+                os.system("rm -rf {}".format(mm))
+
+            if r != 0:
+                print(">> ...{} install failed!".format(mm))
+                print(">> ...try with --nmigen-gitee is recommended!")
+                exit(0)
+        else:
+            subprocess.check_call([python, '-m', 'pip', 'install', mm], stdout=subprocess.DEVNULL)
 
 print(">> Python modules ready!")
 
 # fpga toolchain
-fpga_tools = {'yosys', 'icepack', 'nextpnr-ice40'}
+fpga_tools = {'yosys', 'icepack', 'nextpnr-ice40', 'icesprog'}
 
 r = 0
 for t in fpga_tools:
-    r += os.system("which {} 2>/dev/null".format(t))
+    r += os.system("whereis {} 2>&1".format(t))
 
     if r != 0:
-        print(">> {} is not found, check that!".format(t))
+        print(">> ...{} is not found, check that!".format(t))
 
 if r != 0:
-    print(">> fpga toolchain seems not proper installed!")
     print(">> ==========================================================")
-    print(">> for linux/mac, follow prebuild image is recommended")
-    print(">>   https://github.com/YosysHQ/fpga-toolchain/releases")
-    print(">> for windows user, msys2 + eda package is recommended")
+    print(">> fpga toolchain seems not proper installed!")
+    print(">> for linux/mac, follow prebuild binary is recommended:")
+    print(">>   fpga_toolchain: https://github.com/YosysHQ/fpga-toolchain/releases")
+    print(">>   icesprog: https://github.com/wuxx/icesugar/tree/master/tools")
+    print(">> for windows user, msys2 + eda package is recommended:")
     print(">>   [msys2] $ pacman -S mingw-w64-x86_64-eda")
     print(">>   make sure 'yosys', 'icestorm', 'nxtpnr', 'icesprog' selected")
     print(">> ==========================================================")
