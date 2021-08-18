@@ -16,33 +16,46 @@ if vi < 36:
 
 print(">> Python check pass!")
 
-nmigen = ""
+_gitsrc_ = ""
 
 if len(sys.argv) > 1:
     if sys.argv[1] == "--nmigen-github":
-        nmigen = "https://github.com/nmigen/"
+        _gitsrc_ = "https://github.com/nmigen/"
     elif sys.argv[1] == "--nmigen-gitee":
-        nmigen = "https://gitee.com/x55aa/"
+        _gitsrc_ = "https://gitee.com/x55aa/"
 
 # step 2: nMigen module
-import subprocess
-import pkg_resources
+missing = []
+required = [('nmigen', 'nmigen', 35)]
+required.append(('nmigen_soc', 'nmigen-soc', 1))
+required.append(('nmigen_stdio', 'nmigen-stdio', 1))
+required.append(('nmigen_boards', 'nmigen-boards', 35))
+required.append(('serial', 'pyserial', 35))
 
-required = {'nmigen', 'nmigen-soc', 'nmigen-stdio', 'nmigen-boards', 'pyserial'}
-installed = {pkg.key for pkg in pkg_resources.working_set}
-missing = required - installed
+import importlib
+for mm, repo, vv in required:
+    try:
+        ilm = importlib.import_module(mm)
+    except ModuleNotFoundError:
+        missing.append(repo)
+        continue
+
+    ilm_vs = ilm.__version__.split('.')
+    ilm_vv = int(ilm_vs[0])*10 + int(ilm_vs[1])
+    if ilm_vv < vv:
+        missing.append(repo)
 
 if len(missing) > 0:
     print(">> Install missing modules:")
     python = sys.executable
     for mm in missing:
         print(">> ...Install ", mm)
-        if nmigen != "":
-            if os.system("whereis git 2&>1") != 0:
+        if _gitsrc_ != "":
+            if os.system("whereis git &>/dev/null") != 0:
                 print(">> git is needed, please install it firstly!")
                 exit(0)
 
-            cmd = "git clone {}{} && cd {} && python3 setup.py install --user 2>&1".format(nmigen,mm, mm)
+            cmd = "git clone {}{} && cd {} && python3 setup.py install --user &>/dev/null".format(_gitsrc_,mm, mm)
             r = os.system(cmd)
 
             if os.path.isdir(mm):
@@ -53,6 +66,7 @@ if len(missing) > 0:
                 print(">> ...try with --nmigen-gitee is recommended!")
                 exit(0)
         else:
+            import subprocess
             subprocess.check_call([python, '-m', 'pip', 'install', mm], stdout=subprocess.DEVNULL)
 
 print(">> Python modules ready!")
