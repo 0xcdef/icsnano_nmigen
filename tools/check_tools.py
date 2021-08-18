@@ -34,7 +34,7 @@ if len(missing) > 0:
             print(">> ...{} install failed!".format(mm))
 
         if os.path.isdir(mm):
-            os.system("\rm -rf {}".format(mm))
+            os.system("rm -rf {}".format(mm))
         #print(">> ...Install ", mm)
         #subprocess.check_call([python, '-m', 'pip', 'install', mm], stdout=subprocess.DEVNULL)
 
@@ -45,7 +45,7 @@ fpga_tools = {'yosys', 'icepack', 'nextpnr-ice40'}
 
 r = 0
 for t in fpga_tools:
-    r += os.system("which {} >/dev/null".format(t))
+    r += os.system("which {} 2>/dev/null".format(t))
 
     if r != 0:
         print(">> {} is not found, check that!".format(t))
