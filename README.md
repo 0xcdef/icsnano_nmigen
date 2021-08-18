@@ -32,6 +32,7 @@ for WSL, the windows serial ' **COMn** ' mapped to ' **/dev/ttySn** '<br>
 
 ### Test
     $./tools/pmod_led.sh /dev/ttyS4
+    - change '/dev/ttyS4' to your device node.
 this demo run with 'pmod_led' board, if you do not have one, you can try:`$python3 blink.py`
 
 ## Project summary
