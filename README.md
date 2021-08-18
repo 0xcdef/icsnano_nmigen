@@ -15,9 +15,10 @@ for other errors, the message will guide you to resolve the problem.
 
 ### Connect your iCESugar-nano
 
-for windows user, open hardware manager to confirm serial port : like ' **COM4** '<br>
-for linux user, serial device ' **/dev/ttyACM0** ' is created. you can run `dmesg | grep usb` for more details<br>
-for WSL, the windows serial ' **COMn** ' mapped to ' **/dev/ttySn** '<br>
+for Windows user, open hardware manager to confirm serial port : like **COM4** <br>
+for Linux user, serial device ' **/dev/ttyACM0** ' is created. you can run `dmesg | grep usb` for more details<br>
+for WSL, the windows serial **COMx**  mapped to **/dev/ttySx**<br>
+for msys2, following the case of Windows. target ports should be given like **COMx**
 
 #### important notes:
     confirm that you have access rights (w/r) for serial port and usbhid devices created by icelink.
