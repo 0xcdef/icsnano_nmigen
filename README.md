@@ -21,7 +21,8 @@ confirm that you have access rights (w/r) for serial port and usbhid devices cre
 if not, you can just change their access control by `$sudo chmod 666 /dev/xxx`.
 but for general usage, it's recommended to setup your udev configure file to control the devices.
 for details, please refer to:
-``
+`https://github.com/trabucayre/openFPGALoader/blob/master/INSTALL.md#udev-rules`
+
 4. build and program
 `$python3 wb_bridge.py
 
