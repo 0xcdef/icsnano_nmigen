@@ -17,9 +17,7 @@ for other errors, the message will guide you to resolve the problem.
 ### Connect your iCESugar-nano
 
 for windows user, open hardware manager to confirm serial port : like ' **COM4** '
-
 for linux user, serial device ' **/dev/ttyACM0** ' is created. you can run `dmesg | grep usb` for more details
-
 for WSL, the windows serial ' **COMn** ' mapped to ' **/dev/ttySn** '
 
 #### notes:
@@ -33,8 +31,8 @@ for WSL, the windows serial ' **COMn** ' mapped to ' **/dev/ttySn** '
     $python3 wb_bridge.py
 
 ### Test
-    $./tools/pmod_led.sh
-    this demo run with 'pmod_led' board, if you do not have one, you can try:
+    $./tools/pmod_led.sh /dev/ttyS4
+this demo run with 'pmod_led' board, if you do not have one, you can try:
     $python3 blink.py
 
 ## Project summary
