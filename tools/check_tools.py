@@ -28,17 +28,24 @@ if len(missing) > 0:
     print(">> Install missing modules:")
     python = sys.executable
     for mm in missing:
-        print(">> ...Install ", mm)
-        subprocess.check_call([python, '-m', 'pip', 'install', mm], stdout=subprocess.DEVNULL)
+        cmd = "git clone https://gitee.com/ic-starter/{} && cd {} && python3 setup.py install --user".format(mm, mm)
+        r = os.system(cmd)
+        if r != 0:
+            print(">> ...{} install failed!".format(mm))
+
+        if os.path.isdir(mm):
+            os.system("\rm -rf {}".format(mm))
+        #print(">> ...Install ", mm)
+        #subprocess.check_call([python, '-m', 'pip', 'install', mm], stdout=subprocess.DEVNULL)
 
 print(">> Python modules ready!")
 
 # fpga toolchain
-fpga_tools = {'yosys', 'icepack', 'nxtpnr-ice40'}
+fpga_tools = {'yosys', 'icepack', 'nextpnr-ice40'}
 
 r = 0
 for t in fpga_tools:
-    r += os.system("which {}".format(t))
+    r += os.system("which {} >/dev/null".format(t))
 
     if r != 0:
         print(">> {} is not found, check that!".format(t))
