@@ -38,14 +38,12 @@ for mm, repo, vv in required:
     try:
         ilm = importlib.import_module(mm)
     except ModuleNotFoundError:
-        print("import error", mm)
         missing.append(repo)
         continue
 
     ilm_vs = ilm.__version__.split('.')
     ilm_vv = int(ilm_vs[0])*10 + int(ilm_vs[1])
     if ilm_vv < vv:
-        print(ilm_vv, vv)
         missing.append(repo)
 
 if len(missing) > 0:
