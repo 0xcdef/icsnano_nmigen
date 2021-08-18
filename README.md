@@ -10,7 +10,7 @@ Project test under Ubuntu/Windows WSL/CentOS/msys2
     $cd icsnano_nmigen
     $./tools/check_tools.py --nmigen-gitee
 
-if get error like **check_tools.py**  is not executable, try `$chmod +x ./tools/check_tools.py`
+if get error like `**check_tools.py**  is not executable`, try `$chmod +x ./tools/check_tools.py`
 
 for other errors, the message will guide you to resolve the problem.
 
