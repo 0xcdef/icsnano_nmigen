@@ -10,8 +10,7 @@ Project test under Ubuntu/Windows WSL/CentOS/msys2
     $cd icsnano_nmigen
     $./tools/check_tools.py --nmigen-gitee
 
-if get error like `**check_tools.py**  is not executable`, try `$chmod +x ./tools/check_tools.py`
-
+if get error like `**check_tools.py**  is not executable`, try `$chmod +x ./tools/check_tools.py`<br>
 for other errors, the message will guide you to resolve the problem.
 
 ### Connect your iCESugar-nano
@@ -25,6 +24,7 @@ for WSL, the windows serial ' **COMn** ' mapped to ' **/dev/ttySn** '<br>
     if not, you can just change their access control by `$sudo chmod 666 /dev/xxx`.
     but for general usage, it's recommended to setup your udev configure file to control the devices.
     for details, please refer to:
+
     https://github.com/trabucayre/openFPGALoader/blob/master/INSTALL.md#udev-rules
 
 ### Build and program
@@ -32,8 +32,7 @@ for WSL, the windows serial ' **COMn** ' mapped to ' **/dev/ttySn** '<br>
 
 ### Test
     $./tools/pmod_led.sh /dev/ttyS4
-this demo run with 'pmod_led' board, if you do not have one, you can try:
-    $python3 blink.py
+this demo run with 'pmod_led' board, if you do not have one, you can try:`$python3 blink.py`
 
 ## Project summary
 
