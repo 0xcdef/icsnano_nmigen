@@ -8,7 +8,7 @@ Project test under Ubuntu/Windows WSL/CentOS/msys2
 
 ### Check tool chains:
     $cd icsnano_nmigen
-    $./tools/check_tools.py
+    $./tools/check_tools.py --nmigen-gitee
 
 if get error like **check_tools.py**  is not executable, try `$chmod +x ./tools/check_tools.py`
 
