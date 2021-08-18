@@ -30,12 +30,11 @@ for WSL, the windows serial ' **COMn** ' mapped to ' **/dev/ttySn** '
     https://github.com/trabucayre/openFPGALoader/blob/master/INSTALL.md#udev-rules
 
 ### Build and program
-    `$python3 wb_bridge.py`
+    $python3 wb_bridge.py
 
 ### Test
     $./tools/pmod_led.sh
-
-    this demo run with 'pmod_led' board, if you do not have none, you can try:
+    this demo run with 'pmod_led' board, if you do not have one, you can try:
     $python3 blink.py
 
 ## Project summary
