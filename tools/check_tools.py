@@ -52,11 +52,11 @@ if len(missing) > 0:
     for mm in missing:
         print(">> ...Install ", mm)
         if _gitsrc_ != "":
-            if os.system("whereis git &>/dev/null") != 0:
+            if os.system("whereis git 2>&1") != 0:
                 print(">> git is needed, please install it firstly!")
                 exit(0)
 
-            cmd = "git clone {}{} && cd {} && python3 setup.py install --user &>/dev/null".format(_gitsrc_,mm, mm)
+            cmd = "git clone {}{} && cd {} && python3 setup.py install --user 2>&1".format(_gitsrc_,mm, mm)
             r = os.system(cmd)
 
             if os.path.isdir(mm):
